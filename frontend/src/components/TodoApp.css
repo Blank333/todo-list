@@ -1,0 +1,57 @@
+.todo {
+  background-color: lightcoral;
+  margin: auto;
+  width: 75vw;
+  padding: 1em;
+  border-radius: 5px;
+  margin-top: 0.8em;
+  box-shadow: 2px 2px 5px rgb(170, 44, 44);
+}
+
+.todo > h1 {
+  color: antiquewhite;
+  text-shadow: 1px 1px black;
+  font-size: 4em;
+  text-align: center;
+}
+
+.add-todo {
+  height: 3em;
+  text-align: center;
+}
+
+.add-todo > label {
+  background-color: lightblue;
+  padding: 0.7em;
+  border-radius: 0.3em 0 0 0.3em;
+  font-weight: bold;
+}
+
+.add-todo > input {
+  height: 3em;
+  width: 75%;
+  padding-left: 1em;
+  outline: none;
+  border: 2px lightblue solid;
+}
+
+.add-todo > input:focus {
+  outline: 2px lightblue inset;
+}
+
+.add-todo > button {
+  height: 3em;
+  padding: 0.7em;
+  border-radius: 0 0.3em 0.3em 0;
+  background-color: lightblue;
+  font-weight: bold;
+  border: none;
+}
+
+.add-todo > button:hover {
+  background-color: rgb(122, 185, 208);
+}
+
+.add-todo > button:active {
+  background-color: rgb(64, 145, 172);
+}
