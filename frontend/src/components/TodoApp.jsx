@@ -30,6 +30,8 @@ function TodoApp() {
 
   //API request to backend for adding tasks
   const addTodo = (task) => {
+    if (!task) return console.log("Please provide a task");
+
     fetch("http://localhost:3000/todos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -79,7 +81,7 @@ function TodoApp() {
           <li style={{ backgroundColor: "lightgreen" }}>No tasks!</li>
         ) : (
           //Sort the tasks with their ID (so new tasks appear on the bottom)
-          todos.sort((a, b) => parseInt(a.key) > parseInt(b.key)).map((todo) => <li key={todo.key}>{todo.value}</li>)
+          todos.sort((a, b) => parseInt(a.key) - parseInt(b.key)).map((todo) => <li key={todo.key}>{todo.value}</li>)
         )}
       </ul>
     </div>

@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const cors = require("cors");
 const storage = require("node-persist");
 
+app.use(cors());
 app.use(express.json());
 storage.init().then(() => {
   //Clear storage on restarting the app
@@ -26,6 +28,7 @@ app.get("/todos", (req, res) => {
 
 app.post("/todos", (req, res) => {
   const { taskID, task } = req.body;
+  if (!task) return res.status(400).send("Please enter all information");
   storage
     .setItem(taskID, task)
     .then(() => {
