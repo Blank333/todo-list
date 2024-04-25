@@ -4,7 +4,6 @@ import "./TodoApp.css";
 function TodoApp() {
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
-  const [taskID, setTaskID] = useState(1);
 
   //Handles adding the task to storage
   const handleAddTask = () => {
@@ -24,6 +23,12 @@ function TodoApp() {
     if (e.key === "Enter") handleAddTask();
   };
 
+  //Handles removing task with their IDs
+  const handleRemoveTask = (id) => {
+    removeTodo(id);
+    getTodos();
+  };
+
   useEffect(() => {
     getTodos();
   }, []);
@@ -35,14 +40,10 @@ function TodoApp() {
     fetch("http://localhost:3000/todos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ taskID: taskID.toString(), task }),
-    })
-      .then(() => {
-        console.log(`Added successfully with ID:${taskID}`);
-      })
-      .catch((err) => {
-        console.log(`Error adding ${err}`);
-      });
+      body: JSON.stringify({ task }),
+    }).catch((err) => {
+      console.log(`Error adding ${err}`);
+    });
   };
 
   //API request for fetching the tasks in storage
@@ -53,12 +54,18 @@ function TodoApp() {
       })
       .then((data) => {
         setTodos(data);
-        //Track the ID for node persist storage
-        setTaskID(data.length + 1);
       })
       .catch((err) => {
         console.error(err);
       });
+  };
+
+  const removeTodo = (id) => {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "DELETE",
+    }).catch((err) => {
+      console.log(`Error removing task ${err}`);
+    });
   };
 
   return (
@@ -78,10 +85,21 @@ function TodoApp() {
       </div>
       <ul className='tasks'>
         {!todos.length ? (
-          <li style={{ backgroundColor: "lightgreen" }}>No tasks!</li>
+          <li className='task-item' style={{ backgroundColor: "lightgreen" }}>
+            No tasks!
+          </li>
         ) : (
-          //Sort the tasks with their ID (so new tasks appear on the bottom)
-          todos.sort((a, b) => parseInt(a.key) - parseInt(b.key)).map((todo) => <li key={todo.key}>{todo.value}</li>)
+          //Sort the tasks with their date
+          todos
+            .sort((a, b) => a.createdAt - b.createdAt)
+            .map((todo) => (
+              <li key={todo.id} className='task-item'>
+                <span>{todo.task}</span>
+                <button className='removeTask' onClick={() => handleRemoveTask(todo.id)}>
+                  X
+                </button>
+              </li>
+            ))
         )}
       </ul>
     </div>

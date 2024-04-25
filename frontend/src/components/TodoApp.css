@@ -68,7 +68,7 @@
   font-size: 1.2em;
 }
 
-.tasks > li {
+.task-item {
   background-color: lightblue;
   margin: 0.5em;
   padding: 0.5em;
@@ -78,4 +78,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.task-item > span {
+  padding-right: 5px;
+}
+
+.removeTask {
+  padding: 0.7em;
+  border-radius: 0 0.3em 0.3em 0;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  cursor: pointer;
 }
