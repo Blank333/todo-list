@@ -18,6 +18,7 @@
 .add-todo {
   text-align: center;
   display: flex;
+  justify-content: center;
 }
 
 .add-todo > label {
@@ -96,4 +97,19 @@
   right: 0;
 
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .add-todo {
+    flex-direction: column;
+  }
+  .add-todo > input {
+    width: 100%;
+  }
+  .add-todo > label {
+    border-radius: 0.3em 0.3em 0 0;
+  }
+  .add-todo > button {
+    border-radius: 0 0 0.3em 0.3em;
+  }
 }

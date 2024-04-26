@@ -8,8 +8,6 @@ function TodoApp() {
   //Handles adding the task to storage
   const handleAddTask = () => {
     addTodo(task);
-    //Update todo list
-    getTodos();
     setTask("");
   };
 
@@ -26,7 +24,6 @@ function TodoApp() {
   //Handles removing task with their IDs
   const handleRemoveTask = (id) => {
     removeTodo(id);
-    getTodos();
   };
 
   useEffect(() => {
@@ -41,9 +38,14 @@ function TodoApp() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ task }),
-    }).catch((err) => {
-      console.log(`Error adding ${err}`);
-    });
+    })
+      .then(() => {
+        //Update todo list
+        getTodos();
+      })
+      .catch((err) => {
+        console.log(`Error adding ${err}`);
+      });
   };
 
   //API request for fetching the tasks in storage
@@ -54,6 +56,8 @@ function TodoApp() {
       })
       .then((data) => {
         setTodos(data);
+        //Update todo list
+        getTodos();
       })
       .catch((err) => {
         console.error(err);
